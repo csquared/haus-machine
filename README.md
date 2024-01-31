@@ -1,13 +1,6 @@
-<p align="center">
-  <a href="https://nextjs-flask-starter.vercel.app/">
-    <img src="https://assets.vercel.com/image/upload/v1588805858/repositories/vercel/logo.png" height="96">
-    <h3 align="center">Next.js Flask Starter</h3>
-  </a>
-</p>
+# Haus Machine
 
-<p align="center">Simple Next.js boilerplate that uses <a href="https://flask.palletsprojects.com/">Flask</a> as the API backend.</p>
-
-<br/>
+WIP: Using the nextjs-flask starter to build a small webapp that uses MusicLM to generate audio clips.
 
 ## Introduction
 
