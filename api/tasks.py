@@ -10,8 +10,8 @@ celery = Celery('tasks',
 
 @celery.task(name="api.tasks.gen_audio")
 def gen_audio():
-    processor = AutoProcessor.from_pretrained("facebook/musicgen-large")
-    model = MusicgenForConditionalGeneration.from_pretrained("facebook/musicgen-large") 
+    processor = AutoProcessor.from_pretrained("facebook/musicgen-small")
+    model = MusicgenForConditionalGeneration.from_pretrained("facebook/musicgen-small") 
     inputs = processor(
         text="EDM indie dance track with a four on the floor beat, funky bassline, and groovy synth lead.",
         padding=True,
