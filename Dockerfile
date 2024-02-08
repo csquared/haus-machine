@@ -7,7 +7,9 @@ WORKDIR /app
 COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
 
-COPY . .
+COPY /api /app/api
+RUN mkdir public
+COPY public /app/public
 
 #ENV PYTHONPATH "${PYTHONPATH}:/app"
 ENV PORT 5000
