@@ -1,11 +1,7 @@
-'use client'
-import Image from 'next/image'
-import Link from 'next/link'
 import { useState } from 'react'
 
 export default function Home() {
   const [isGenerating, setIsGenerating] = useState(false);
-  //const [progress, setProgress] = useState(0);
   const [audioSrc, setAudioSrc] = useState('');
 
   const generateBeat = async () => { 
@@ -50,7 +46,7 @@ export default function Home() {
         >
           {isGenerating ? 'Generating...' : 'Generate Beat'}
         </button>
-        {(!isGenerating && audioSrc) && <div className="p-4"> <audio controls src={audioSrc} /> </div>}
+        {(!isGenerating && audioSrc) && <div className="p-4"> <audio controls loop src={audioSrc} /> </div>}
       </div>
     </main>
   )

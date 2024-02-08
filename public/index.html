@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haus Machine</title>
+    <!-- Include Tailwind CSS from CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- React and ReactDOM from CDN for development -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <!-- Babel for JSX parsing (not for production use) -->
+    <script src="https://unpkg.com/@babel/standalone@7.12.9/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        function Home() {
+            const [isGenerating, setIsGenerating] = useState(false);
+            const [audioSrc, setAudioSrc] = useState('');
+
+            const generateBeat = async () => {
+                // Example API call, replace URL with your actual API endpoint
+                const generateResponse = await fetch('/api/v1/gen_audio', { method: 'POST' });
+                const { id } = await generateResponse.json();
+                console.log(id);
+
+                setIsGenerating(true);
+
+                const checkProgress = () => {
+                    fetch(`/api/v1/gen_audio_progress?id=${id}`)
+                        .then((response) => response.json())
+                        .then((data) => {
+                            console.log(data);
+                            const { state, result } = data;
+                            if (state === 'PENDING') {
+                                setTimeout(checkProgress, 1000); // Poll every second
+                            } else {
+                                setAudioSrc(result); // Set the source of the audio player to the generated audio URL
+                                setIsGenerating(false);
+                            }
+                        })
+                        .catch((error) => {
+                            console.error('Error fetching progress:', error);
+                            setIsGenerating(false);
+                        });
+                };
+
+                checkProgress();
+            };
+
+            return (
+                <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-cover" style={{backgroundImage: "url('/background.webp')"}}>
+                    <div className="text-center">
+                        <h1 className="text-5xl text-white font-bold mb-6">Haus Machine</h1>
+                        <button
+                            onClick={generateBeat}
+                            disabled={isGenerating}
+                            className={`text-white font-bold py-2 px-4 rounded-lg transition duration-300 ${isGenerating ? 'animate-pulse bg-blue-400' : 'bg-blue-500 hover:bg-blue-600'}`}
+                        >
+                            {isGenerating ? 'Generating...' : 'Generate Beat'}
+                        </button>
+                        {(!isGenerating && audioSrc) && <div className="p-4"> <audio controls loop src={audioSrc} /> </div>}
+                    </div>
+                </main>
+            );
+        }
+
+        // Render the Home component into the root div
+        ReactDOM.render(<Home />, document.getElementById('root'));
+    </script>
+</body>
+</html>

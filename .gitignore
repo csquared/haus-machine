@@ -37,3 +37,4 @@ __pycache__
 
 public/wavs
 dump.rdb
+.env*

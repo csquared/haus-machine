@@ -1,12 +1,14 @@
 import sys
-from flask import Flask, jsonify, request
-from tasks import gen_audio, celery
+import os
+from flask import Flask, jsonify, request, send_from_directory
+from api.tasks import gen_audio, celery
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../public', static_url_path='')
 
-@app.route("/api/v1/")
-def hello_world():
-    return "<p>Hello, World!</p>"
+@app.route("/")
+def home():
+    public_dir = os.path.join(app.root_path, '..', 'public')
+    return send_from_directory(public_dir, 'index.html')
 
 @app.route("/api/v1/gen_audio", methods=['POST'])
 def generate_audio():

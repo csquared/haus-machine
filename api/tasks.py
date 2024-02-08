@@ -2,10 +2,11 @@ from transformers import AutoProcessor, MusicgenForConditionalGeneration
 from celery import Celery
 import scipy
 import hashlib
+import os
 
 celery = Celery('tasks', 
-                broker='redis://localhost:6379/0', 
-                backend='redis://localhost:6379/1', 
+                broker=os.getenv('REDIS_SERVER') + '/0', 
+                backend=os.getenv('REDIS_SERVER') + '/1', 
                 include=['api.tasks'])
 
 @celery.task(name="api.tasks.gen_audio")
