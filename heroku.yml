@@ -1,0 +1,11 @@
+setup:
+  addons:
+    - plan: heroku-redis:mini
+      as: REDIS_SERVER
+build:
+  docker:
+    web: Dockerfile
+    worker: Dockerfile
+run:
+  web: gunicorn -b 0.0.0.0:$PORT api.index:app
+  worker: "celery -A api.tasks worker --loglevel=info
