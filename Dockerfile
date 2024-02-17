@@ -13,5 +13,6 @@ COPY public /app/public
 
 #ENV PYTHONPATH "${PYTHONPATH}:/app"
 ENV PORT 5000
+EXPOSE $PORT
 
 CMD gunicorn -b 0.0.0.0:$PORT api.index:app

@@ -1,4 +1,3 @@
-import sys
 import os
 from flask import Flask, jsonify, request, send_from_directory
 from api.tasks import gen_audio, celery
