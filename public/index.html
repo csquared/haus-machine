@@ -23,7 +23,6 @@
             const [audioSrc, setAudioSrc] = useState('');
 
             const generateBeat = async () => {
-                // Example API call, replace URL with your actual API endpoint
                 const generateResponse = await fetch('/api/v1/gen_audio', { method: 'POST' });
                 const { id } = await generateResponse.json();
                 console.log(id);

@@ -1,0 +1,4 @@
+#! /bin/sh
+
+export REDIS_SERVER=redis://localhost:6379
+python3 -m flask --app api/index run -p 5328

@@ -1,0 +1,4 @@
+#! /bin/sh
+
+export REDIS_SERVER=redis://localhost:6379
+celery -A api.tasks worker --loglevel=info

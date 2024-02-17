@@ -7,3 +7,4 @@ Celery
 redis
 gunicorn
 Werkzeug==2.3.7
+boto
